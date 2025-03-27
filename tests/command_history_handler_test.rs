@@ -1,8 +1,8 @@
-use temp_env;
+use nebula_env::command_history_handler::{HISTORY_FILE, get_history_path, store_command};
 use std::fs;
 use std::path::PathBuf;
+use temp_env;
 use tempfile::TempDir;
-use nebula_env::command_history_handler::{get_history_path, store_command, HISTORY_FILE};
 
 #[test]
 fn test_get_history_path_success() {
@@ -12,7 +12,10 @@ fn test_get_history_path_success() {
     temp_env::with_var("HOME", Some(temp_path), || {
         let path = get_history_path().expect("Expected a valid path");
 
-        assert_eq!(path, PathBuf::from(format!("{}/{}", temp_path, HISTORY_FILE)));
+        assert_eq!(
+            path,
+            PathBuf::from(format!("{}/{}", temp_path, HISTORY_FILE))
+        );
     });
 }
 
@@ -26,8 +29,7 @@ fn test_store_command() {
     store_command(command, temp_file_path.clone())
         .expect("Must store the command in the specified path");
 
-    let contents = fs::read_to_string(&temp_file_path)
-        .expect("Must read the stored file");
+    let contents = fs::read_to_string(&temp_file_path).expect("Must read the stored file");
 
     assert!(contents.contains(command));
 }
@@ -43,10 +45,9 @@ fn test_store_command_appends_commands() {
     store_command(command1, temp_file_path.clone()).expect("Must store first command");
     store_command(command2, temp_file_path.clone()).expect("Must store second command");
 
-    let contents = fs::read_to_string(&temp_file_path)
-        .expect("Must read the command without error");
+    let contents =
+        fs::read_to_string(&temp_file_path).expect("Must read the command without error");
 
     assert!(contents.contains(command1));
     assert!(contents.contains(command2));
 }
-

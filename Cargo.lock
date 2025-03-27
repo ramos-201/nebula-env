@@ -71,7 +71,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "nebula-env"
+name = "nebula_env"
 version = "0.1.0"
 dependencies = [
  "temp-env",
