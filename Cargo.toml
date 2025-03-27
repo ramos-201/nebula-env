@@ -1,6 +1,10 @@
 [package]
-name = "nebula-env"
+name = "nebula_env"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+
+[dev-dependencies]
+temp-env = "0.3"
+tempfile = "3"
