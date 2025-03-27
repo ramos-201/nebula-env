@@ -1,3 +1,7 @@
+pub mod command_history_handler;
+
 fn main() {
-    println!("Hello, world!");
+    if let Err(err) = command_history_handler::run_handler() {
+        eprintln!("Error: {}", err);
+    }
 }
